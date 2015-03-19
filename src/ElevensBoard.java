@@ -55,9 +55,9 @@ public class ElevensBoard extends Board {
   public boolean isLegal(List<Integer> selectedCards) {
     /* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
     if(selectedCards.size()==2)
-      return selectedCards.get(0)+selectedCards(1)==11;
+      return selectedCards.get(0)+selectedCards.get(1)==11;
     else if(selectedCards.size()==3)
-      return selctedCards.get(0)+selectedCards.get(1)+selectedCards.get(2)==36;
+      return selectedCards.get(0)+selectedCards.get(1)+selectedCards.get(2)==0;
     else
       return false;
   }
@@ -73,10 +73,10 @@ public class ElevensBoard extends Board {
   @Override
   public boolean anotherPlayIsPossible() {
     /* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
-    return containsPairSum11()||containsJQK();
+    return containsPairSum11(cardIndexes())||containsJQK(cardIndexes());
     
     
-          
+    
   }
   
   /**
@@ -94,7 +94,7 @@ public class ElevensBoard extends Board {
     for(int i=0;i<9;i++){
       for(int j=0;j<9;j++){
         if(j!=i){
-          if(cardAt(i)+cardAt(j)==11)
+          if(cardAt(i).pointValue()+cardAt(j).pointValue()==11)
             return true;
         }
       }
@@ -115,11 +115,11 @@ public class ElevensBoard extends Board {
     if(gameIsWon()||isEmpty())
       return false;
     for(int i=0;i<9;i++){
-      if(cardAt(i)==11||cardAt(i)==12||cardAt(i)==13){
+      if(cardAt(i).rank().equalsIgnoreCase("king")||cardAt(i).rank().equalsIgnoreCase("queen")||cardAt(i).rank().equalsIgnoreCase("jack")){
         for(int j=0;j<9;j++){
-          if(cardAt(j)!=cardAt(i)&&(cardAt(j)==11||cardAt(j)==12||cardAt(j)==13)){
+          if((cardAt(j)!=cardAt(i)&&(cardAt(j).rank().equalsIgnoreCase("king")))||cardAt(j).rank().equalsIgnoreCase("queen")||cardAt(j).rank().equalsIgnoreCase("jack")){
             for(int k=0;k<9;k++){
-              if(cardAt(k)!=cardAt(i)&&cardAt(k)!=cardAt(j)&&(cardAt(k)==11||cardAt(j)==12||cardAt(j)==13)){
+              if(cardAt(k)!=cardAt(i)&&cardAt(k)!=cardAt(j)&&(cardAt(k).rank().equalsIgnoreCase("king"))||cardAt(j).rank().equalsIgnoreCase("queen")||cardAt(j).rank().equalsIgnoreCase("jack")){
                 return true;
               }
             }
@@ -128,4 +128,5 @@ public class ElevensBoard extends Board {
       }
     }
     return false;
+  }
 }
