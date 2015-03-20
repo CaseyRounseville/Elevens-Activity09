@@ -54,12 +54,14 @@ public class ElevensBoard extends Board {
   @Override
   public boolean isLegal(List<Integer> selectedCards) {
     /* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
+    System.out.println(selectedCards);
     if(selectedCards.size()==2)
-      return selectedCards.get(0)+selectedCards.get(1)==11;
+      return cardAt(selectedCards.get(0)).pointValue()+cardAt(selectedCards.get(1)).pointValue()==11;
     else if(selectedCards.size()==3)
-      return selectedCards.get(0)+selectedCards.get(1)+selectedCards.get(2)==0;
+      return cardAt(selectedCards.get(0)).pointValue()+cardAt(selectedCards.get(1)).pointValue()+cardAt(selectedCards.get(2)).pointValue()==0;
     else
       return false;
+    //return selectedCards.get(1)==1;
   }
   
   /**
@@ -117,9 +119,9 @@ public class ElevensBoard extends Board {
     for(int i=0;i<9;i++){
       if(cardAt(i).rank().equalsIgnoreCase("king")||cardAt(i).rank().equalsIgnoreCase("queen")||cardAt(i).rank().equalsIgnoreCase("jack")){
         for(int j=0;j<9;j++){
-          if((cardAt(j)!=cardAt(i)&&(cardAt(j).rank().equalsIgnoreCase("king")))||cardAt(j).rank().equalsIgnoreCase("queen")||cardAt(j).rank().equalsIgnoreCase("jack")){
+          if((!cardAt(j).rank().equals(cardAt(i)))&&(cardAt(j).rank().equalsIgnoreCase("king"))||cardAt(j).rank().equalsIgnoreCase("queen")||cardAt(j).rank().equalsIgnoreCase("jack")){
             for(int k=0;k<9;k++){
-              if(cardAt(k)!=cardAt(i)&&cardAt(k)!=cardAt(j)&&(cardAt(k).rank().equalsIgnoreCase("king"))||cardAt(j).rank().equalsIgnoreCase("queen")||cardAt(j).rank().equalsIgnoreCase("jack")){
+              if((!cardAt(k).rank().equals(cardAt(i))&&!cardAt(k).rank().equals(cardAt(j)))&&((cardAt(k).rank().equalsIgnoreCase("king"))||cardAt(j).rank().equalsIgnoreCase("queen")||cardAt(j).rank().equalsIgnoreCase("jack"))){
                 return true;
               }
             }
