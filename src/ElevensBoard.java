@@ -54,14 +54,12 @@ public class ElevensBoard extends Board {
   @Override
   public boolean isLegal(List<Integer> selectedCards) {
     /* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
-    System.out.println(selectedCards);
     if(selectedCards.size()==2)
       return cardAt(selectedCards.get(0)).pointValue()+cardAt(selectedCards.get(1)).pointValue()==11;
     else if(selectedCards.size()==3)
-      return cardAt(selectedCards.get(0)).pointValue()+cardAt(selectedCards.get(1)).pointValue()+cardAt(selectedCards.get(2)).pointValue()==0;
+      return containsJQK(selectedCards);
     else
       return false;
-    //return selectedCards.get(1)==1;
   }
   
   /**
@@ -76,9 +74,6 @@ public class ElevensBoard extends Board {
   public boolean anotherPlayIsPossible() {
     /* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
     return containsPairSum11(cardIndexes())||containsJQK(cardIndexes());
-    
-    
-    
   }
   
   /**
@@ -96,8 +91,10 @@ public class ElevensBoard extends Board {
     for(int i=0;i<9;i++){
       for(int j=0;j<9;j++){
         if(j!=i){
-          if(cardAt(i).pointValue()+cardAt(j).pointValue()==11)
-            return true;
+          if(cardAt(i)!=null&&cardAt(j)!=null){
+            if(cardAt(i).pointValue()+cardAt(j).pointValue()==11)
+              return true;
+          }
         }
       }
     }
@@ -116,13 +113,86 @@ public class ElevensBoard extends Board {
     /* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
     if(gameIsWon()||isEmpty())
       return false;
-    for(int i=0;i<9;i++){
-      if(cardAt(i).rank().equalsIgnoreCase("king")||cardAt(i).rank().equalsIgnoreCase("queen")||cardAt(i).rank().equalsIgnoreCase("jack")){
-        for(int j=0;j<9;j++){
-          if((!cardAt(j).rank().equals(cardAt(i)))&&(cardAt(j).rank().equalsIgnoreCase("king"))||cardAt(j).rank().equalsIgnoreCase("queen")||cardAt(j).rank().equalsIgnoreCase("jack")){
-            for(int k=0;k<9;k++){
-              if((!cardAt(k).rank().equals(cardAt(i))&&!cardAt(k).rank().equals(cardAt(j)))&&((cardAt(k).rank().equalsIgnoreCase("king"))||cardAt(j).rank().equalsIgnoreCase("queen")||cardAt(j).rank().equalsIgnoreCase("jack"))){
-                return true;
+    for(int i=0;i<BOARD_SIZE;i++){
+      if(cardAt(i)!=null){
+        String rank1=cardAt(i).rank();
+        if(rank1.equalsIgnoreCase("king")){
+          for(int j=0;j<BOARD_SIZE;j++){
+            if(cardAt(j)!=null){
+              String rank2=cardAt(j).rank();
+              if(rank2.equals("queen")){
+                for(int k=0;k<BOARD_SIZE;k++){
+                  if(cardAt(k)!=null){
+                    String rank3=cardAt(k).rank();
+                    if(rank3.equals("jack")){
+                      return true;
+                    }
+                  }
+                }
+              }
+              if(rank2.equals("jack")){
+                for(int k=0;k<BOARD_SIZE;k++){
+                  if(cardAt(k)!=null){
+                    String rank3=cardAt(k).rank();
+                    if(rank3.equals("queen")){
+                      return true;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        else if(rank1.equalsIgnoreCase("queen")){
+          for(int j=0;j<BOARD_SIZE;j++){
+            if(cardAt(j)!=null){
+              String rank2=cardAt(j).rank();
+              if(rank2.equals("king")){
+                for(int k=0;k<BOARD_SIZE;k++){
+                  if(cardAt(k)!=null){
+                    String rank3=cardAt(k).rank();
+                    if(rank3.equals("jack")){
+                      return true;
+                    }
+                  }
+                }
+              }
+              if(rank2.equals("jack")){
+                for(int k=0;k<BOARD_SIZE;k++){
+                  if(cardAt(k)!=null){
+                    String rank3=cardAt(k).rank();
+                    if(rank3.equals("king")){
+                      return true;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        else if(rank1.equalsIgnoreCase("jack")){
+          for(int j=0;j<BOARD_SIZE;j++){
+            if(cardAt(j)!=null){
+              String rank2=cardAt(j).rank();
+              if(rank2.equals("king")){
+                for(int k=0;k<BOARD_SIZE;k++){
+                  if(cardAt(k)!=null){
+                    String rank3=cardAt(k).rank();
+                    if(rank3.equals("queen")){
+                      return true;
+                    }
+                  }
+                }
+              }
+              if(rank2.equals("queen")){
+                for(int k=0;k<BOARD_SIZE;k++){
+                  if(cardAt(k)!=null){
+                    String rank3=cardAt(k).rank();
+                    if(rank3.equals("king")){
+                      return true;
+                    }
+                  }
+                }
               }
             }
           }
